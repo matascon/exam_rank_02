@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <limits.h>
 
+#define F ft_printf
+
 static char	*ft_strdup(char *s)
 {
 	int		i;
@@ -85,7 +87,7 @@ int			ft_printf(const char *format, ...)
 	printed = 0;
 	i = 0;
 	va_start(args, format);
-	while (fmt[i])
+	while (fmt[i] != '\0')
 	{
 		if (fmt[i] == '%')
 		{
@@ -126,22 +128,23 @@ int			ft_printf(const char *format, ...)
 			}
 			while (str[len])
 				len++;
+			
 			if (fmt[i] == 's')
 			{
 				if (len < precision || !dot)
 					precision = len;
 				width = width - precision;
 				while (width-- > 0)
-					write(1, " ", 1);
+					printed += write(1, " ", 1);
 				while (j < precision)
-					write(1, &str[j++], 1);
+					printed += write(1, &str[j++], 1);
 			}
 			else if (fmt[i] == 'd' || fmt[i] == 'x')
 			{
 				if (nbr == 0 && dot && precision == 0)
 				{
 					while (width-- > 0)
-						write(1, " ", 1);
+						printed += write(1, " ", 1);
 				}
 				else
 				{
@@ -152,34 +155,81 @@ int			ft_printf(const char *format, ...)
 					else
 						width -= len;
 					while (width-- > 0)
-						write(1, " ", 1);
+						printed += write(1, " ", 1);
 					if (nbr < 0)
-						write(1, "-", 1);
+						printed += write(1, "-", 1);
 					precision -= len;
 					while (precision-- > 0)
-						write(1, "0", 1);
+						printed += write(1, "0", 1);
 					while (j < len)
-						write(1, &str[j++], 1);
+						printed += write(1, &str[j++], 1);
 				}
 			}
 			if (str)
 				free(str);
-			i++;
 		}
-		write(1, &fmt[i], 1);
-		printed++;
+		else
+		{
+			write(1, &fmt[i], 1);
+			printed++;
+		}
 		i++;
 	}
 	va_end(args);
 	return (printed);
-}/*
+}
 
 int	main()
 {
-	printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
-	ft_printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
-	ft_printf("%10.2s\n", "toto");
+	int i;
+
+	/*i = printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
+	ft_printf("%d\n", i);
+	i = ft_printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
+	ft_printf("%d\n", i);*/
+	/*ft_printf("%10.2s\n", "toto");
 	ft_printf("Magic %s is %5d\n", "number", 42);
 	ft_printf("Hexadecimal for %d is %x\n", 42, 42);
+	ft_printf("Simple test\n");
+	ft_printf("");
+	ft_printf("--Format---");
+	F("\n");
+	//ft_printf("%d", 0);
+	F("%d", 1);
+	F("\n");
+	F("%d", 5454);
+	F("\n");
+	F("%d", (int)2147483647);
+	F("\n");
+	F("%d", (int)2147483648);
+	F("\n");
+	F("%d", (int)-2147483648);
+	F("\n");
+	F("%d", (int)-2147483649);
+	F("\n");
+	F("%x", 0);
+	F("\n");
+	F("%x", 42);
+	F("\n");
+	F("%x", 1);
+	F("\n");
+	F("%x", 5454);
+	F("\n");
+	F("%x", (int)2147483647);
+	F("\n");
+	F("%x", (int)2147483648);
+	F("\n");
+	F("%x", (int)-2147483648);
+	F("\n");
+	F("%x", (int)-2147483649);
+	F("\n");
+	F("%s", "");
+	F("\n");
+	F("%s", "toto");
+	F("\n");
+	F("%s", "wiurwuyrhwrywuier");
+	F("\n");
+	F("%s", NULL);
+	F("\n");*/
 	return (0);
-}*/
+}
