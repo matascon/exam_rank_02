@@ -17,7 +17,7 @@
 #include <limits.h>
 
 #define F ft_printf
-
+/*
 static char	*ft_strdup(char *s)
 {
 	int		i;
@@ -34,7 +34,7 @@ static char	*ft_strdup(char *s)
 		str[i] = s[i];
 	str[i] = '\0';
 	return (str);
-}
+}*/
 
 static char	*ft_base(long nbr, char *base)
 {
@@ -112,9 +112,7 @@ int			ft_printf(const char *format, ...)
 			{
 				str = va_arg(args, char *);
 				if (!str)
-					str = ft_strdup("(null)");
-				else
-					str = ft_strdup(str);
+					str = "(null)";
 			}
 			else if (fmt[i] == 'd')
 			{
@@ -164,9 +162,9 @@ int			ft_printf(const char *format, ...)
 					while (j < len)
 						printed += write(1, &str[j++], 1);
 				}
+				if (str)
+					free(str);
 			}
-			if (str)
-				free(str);
 		}
 		else
 		{
@@ -178,16 +176,16 @@ int			ft_printf(const char *format, ...)
 	va_end(args);
 	return (printed);
 }
-
+/*
 int	main()
 {
 	int i;
 
-	/*i = printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
+	i = printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
 	ft_printf("%d\n", i);
 	i = ft_printf("Hola %7s %.3d %.0x %5.1d %.5s %d\n", "mateo", -42, 42, 0, NULL, INT_MAX + 1);
-	ft_printf("%d\n", i);*/
-	/*ft_printf("%10.2s\n", "toto");
+	ft_printf("%d\n", i);
+	ft_printf("%10.2s\n", "toto");
 	ft_printf("Magic %s is %5d\n", "number", 42);
 	ft_printf("Hexadecimal for %d is %x\n", 42, 42);
 	ft_printf("Simple test\n");
@@ -230,6 +228,7 @@ int	main()
 	F("%s", "wiurwuyrhwrywuier");
 	F("\n");
 	F("%s", NULL);
-	F("\n");*/
+	F("\n");
 	return (0);
 }
+*/
