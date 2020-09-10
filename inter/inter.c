@@ -19,11 +19,11 @@ int	main(int argc, char **argv)
 			{
 				if (argv[1][i] == argv[2][j])
 				{
-					if (!(chars[argv[2][j]]))
+					if (!(chars[(int)argv[2][j]]))
 					{
 						write(1, &argv[1][i], 1);
-						chars[argv[1][i]] = 1;
-					}	
+						chars[(int)argv[1][i]] = 1;
+					}
 				}
 				j++;
 			}

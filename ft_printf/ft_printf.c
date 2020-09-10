@@ -50,7 +50,7 @@ static char	*ft_base(long nbr, char *base)
 	while (base[len_base])
 		len_base++;
 	len_nbr = 0;
-	while (nbr_copy >= 10)
+	while (nbr_copy >= len_base)
 	{
 		nbr_copy /= len_base;
 		len_nbr++;
@@ -60,7 +60,7 @@ static char	*ft_base(long nbr, char *base)
 	if (!str)
 		return (NULL);
 	str[len_nbr--] = '\0';
-	while (nbr >= 10)
+	while (nbr >= len_base)
 	{
 		str[len_nbr--] = base[nbr % len_base];
 		nbr /= len_base;
@@ -126,7 +126,6 @@ int			ft_printf(const char *format, ...)
 			}
 			while (str[len])
 				len++;
-			
 			if (fmt[i] == 's')
 			{
 				if (len < precision || !dot)
@@ -167,10 +166,7 @@ int			ft_printf(const char *format, ...)
 			}
 		}
 		else
-		{
-			write(1, &fmt[i], 1);
-			printed++;
-		}
+			printed += write(1, &fmt[i], 1);
 		i++;
 	}
 	va_end(args);

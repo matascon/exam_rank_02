@@ -17,10 +17,10 @@ int	main(int argc, char **argv)
 			j = 0;
 			while (argv[i][j])
 			{
-				if (!(chars[argv[i][j]]))
+				if (!(chars[(int)argv[i][j]]))
 				{
 					write(1, &argv[i][j], 1);
-					chars[argv[i][j]] = argv[i][j];
+					chars[(int)argv[i][j]] = argv[i][j];
 				}
 				j++;
 			} 
